@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.amazon.aws.engine.IntegrationTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-12-31T21:51:44" hostname="DESKTOP-P8MTEK4" time="10.325">
+  <properties/>
+  <testcase name="processOrder_UnevenManyBuySellOrders_ShouldPartiallyFillOrder" classname="com.amazon.aws.engine.IntegrationTest" time="10.325"/>
+  <system-out><![CDATA[Entered Server.processOrder()
+Entered Server.processOrder()
+Entered Server.processOrder()
+Entered Server.processOrder()
+Entered Server.processOrder()
+***************Beginning Order Matching**********************
+OrderMatchingAlgorithm - Iteration 0, sharesCount : 1
+OrderMatchingAlgorithm - Iteration 1, sharesCount : 3
+OrderMatchingAlgorithm - Iteration 2, sharesCount : 5
+OrderMatchingAlgorithm - Iteration 3, sharesCount : 8
+SharesCount 8
+Does this print??
+***************FINISHED Order Matching**********************
+Buy order status: FILLED
+SellOrder Original Shares 1 | New Status: FILLED | Remaining Shares: 0
+SellOrder Original Shares 2 | New Status: FILLED | Remaining Shares: 0
+SellOrder Original Shares 2 | New Status: FILLED | Remaining Shares: 0
+SellOrder Original Shares 3 | New Status: PARTIALLY_FILLED | Remaining Shares: 2
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

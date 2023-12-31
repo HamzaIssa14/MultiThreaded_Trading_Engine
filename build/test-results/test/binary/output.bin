@@ -1,0 +1,18 @@
+Entered Server.processOrder()
+Entered Server.processOrder()
+Entered Server.processOrder()
+Entered Server.processOrder()
+Entered Server.processOrder()
+?***************Beginning Order Matching**********************
+7OrderMatchingAlgorithm - Iteration 0, sharesCount : 1
+7OrderMatchingAlgorithm - Iteration 1, sharesCount : 3
+7OrderMatchingAlgorithm - Iteration 2, sharesCount : 5
+7OrderMatchingAlgorithm - Iteration 3, sharesCount : 8
+SharesCount 8
+Does this print??
+>***************FINISHED Order Matching**********************
+Buy order status: FILLED
+HSellOrder Original Shares 1 | New Status: FILLED | Remaining Shares: 0
+HSellOrder Original Shares 2 | New Status: FILLED | Remaining Shares: 0
+HSellOrder Original Shares 2 | New Status: FILLED | Remaining Shares: 0
+RSellOrder Original Shares 3 | New Status: PARTIALLY_FILLED | Remaining Shares: 2

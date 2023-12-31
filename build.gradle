@@ -1,0 +1,31 @@
+// Apply the Java plugin to add support for Java
+plugins {
+    id 'java'
+}
+
+// Defines the group ID and version of your Gradle project.
+// These attributes are often used in publishing artifacts.
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+// Specifies the Java version to be used for compiling the project.
+// Here, it's set to Java 8.
+sourceCompatibility = 1.8
+
+// Declares the repository where Gradle can find the dependencies.
+// mavenCentral() refers to Maven Central Repository.
+repositories {
+    mavenCentral()
+}
+
+// Manages project dependencies.
+dependencies {
+    // JUnit is a unit testing framework for Java.
+    // This dependency is used for writing and executing tests.
+    // The 'testCompile' configuration indicates that JUnit is only needed for compiling tests.
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    // Adding Mockito as a test dependency for mocking in tests.
+    // The 'testImplementation' configuration is recommended over 'testCompile' for newer Gradle versions.
+    testImplementation 'org.mockito:mockito-core:3.9.0' // Add the latest stable version of Mockito
+}
