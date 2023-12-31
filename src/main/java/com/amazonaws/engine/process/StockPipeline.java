@@ -38,13 +38,16 @@ public class StockPipeline implements Runnable {
             Order order = orderQueue.take();
             if(order.getOrderAction().equals(OrderAction.BUY)){
                 buyOrderProducer.submitOrder(order);
+                System.out.println("---- Submitting order #" + order.hashCode() +" to BuyOrderProducer");
                 pool.execute(buyOrderProducer);
 
             } else if (order.getOrderAction().equals(OrderAction.SELL)){
+                System.out.println("---- Submitting order #" + order.hashCode() +" to SellOrderProducer");
                 sellOrderProducer.submitOrder(order);
                 pool.execute(sellOrderProducer);
 
             }
+            System.out.println("---- Booting up StockConsumer...");
             pool.execute(stockConsumer);
         } catch (InterruptedException e) {
                 e.printStackTrace();

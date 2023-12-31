@@ -26,14 +26,14 @@ public class StockConsumer implements Runnable{
             Order buyOrder;
             if (!buySharedBuffer.buffer.isEmpty()) {
                 buyOrder = buySharedBuffer.take();
-
+                System.out.println("StockConsumer polling queue of of pending orders...");
                 while (countTotalSellShares(sellOrders) < buyOrder.getShares()) {
                     if (!sellSharedBuffer.buffer.isEmpty()) {
                         Order sellOrder = sellSharedBuffer.take();
                         sellOrders.add(sellOrder);
                     }
                 }
-
+                System.out.println("Executing OrderMatching Algorithm...");
                 // Run Matching Algorithm
                 orderMatchingAlgorithm.fillOrder(buyOrder, sellOrders);
             }

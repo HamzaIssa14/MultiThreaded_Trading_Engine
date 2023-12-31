@@ -1,15 +1,36 @@
-Entered Server.processOrder()
-Entered Server.processOrder()
-Entered Server.processOrder()
-Entered Server.processOrder()
-Entered Server.processOrder()
+&Server processing order: #1061934666
+Server booting up...
+F-- StockPipeline for APPL does NOT exist. Creating stock pipeline...
+:-- Submitting order #1061934666 to created StockPipeline
+&Server processing order: #1410770231
+7---- Submitting order #1061934666 to BuyOrderProducer
+,-- StockPipeline for APPL already exists. 
+"---- Booting up StockConsumer...
+;-- Submitting order #1410770231 to existing StockPipeline
+5StockConsumer polling queue of of pending orders...
+&Server processing order: #1393046921
+8---- Submitting order #1410770231 to SellOrderProducer
+"---- Booting up StockConsumer...
+,-- StockPipeline for APPL already exists. 
+;-- Submitting order #1393046921 to existing StockPipeline
+%Server processing order: #770003549
+8---- Submitting order #1393046921 to SellOrderProducer
+"---- Booting up StockConsumer...
+,-- StockPipeline for APPL already exists. 
+:-- Submitting order #770003549 to existing StockPipeline
+&Server processing order: #1278965195
+7---- Submitting order #770003549 to SellOrderProducer
+"---- Booting up StockConsumer...
+,-- StockPipeline for APPL already exists. 
+;-- Submitting order #1278965195 to existing StockPipeline
+8---- Submitting order #1278965195 to SellOrderProducer
+"---- Booting up StockConsumer...
+&Executing OrderMatching Algorithm...
 ?***************Beginning Order Matching**********************
 7OrderMatchingAlgorithm - Iteration 0, sharesCount : 1
 7OrderMatchingAlgorithm - Iteration 1, sharesCount : 3
 7OrderMatchingAlgorithm - Iteration 2, sharesCount : 5
 7OrderMatchingAlgorithm - Iteration 3, sharesCount : 8
-SharesCount 8
-Does this print??
 >***************FINISHED Order Matching**********************
 Buy order status: FILLED
 HSellOrder Original Shares 1 | New Status: FILLED | Remaining Shares: 0

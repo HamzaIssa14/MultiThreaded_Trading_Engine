@@ -34,6 +34,7 @@ public class Server implements Runnable {
 
     @Override
     public void run(){
+        System.out.println("Server booting up...");
         try{
             ServerSocket server = new ServerSocket(8080);
             connectionPool = Executors.newCachedThreadPool();
@@ -65,14 +66,18 @@ public class Server implements Runnable {
     }
 
     public void processOrder(Order order){
-        System.out.println("Entered Server.processOrder()");
+        System.out.println("Server processing order: #" + order.hashCode());
             for(StockUniverse stock : StockUniverse.values()){
                 if (stock.getDescription().equals(order.getStock().getStockTicker().getDescription()))
                     try {
                         if(stockPipelineMap.containsKey(order.getStock().getStockTicker())){
+                            System.out.println("-- StockPipeline for " + order.getStock().getStockTicker() + " already exists. ");
+                            System.out.println("-- Submitting order #" + order.hashCode() + " to existing StockPipeline");
                             stockPipelineMap.get(order.getStock().getStockTicker()).submitOrder(order);
                             stockPipelinePool.execute(stockPipelineMap.get(order.getStock().getStockTicker()));
                         } else {
+                            System.out.println("-- StockPipeline for " + order.getStock().getStockTicker() + " does NOT exist. Creating stock pipeline...");
+                            System.out.println("-- Submitting order #" + order.hashCode() + " to created StockPipeline");
                             StockPipeline stockPipeline = stockPipelineFactory.generateStockPipeline();
                             stockPipelineMap.put(stock, stockPipeline);
                             stockPipeline.submitOrder(order);

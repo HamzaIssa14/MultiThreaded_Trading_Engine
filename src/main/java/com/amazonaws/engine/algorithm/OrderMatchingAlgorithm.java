@@ -2,6 +2,7 @@ package com.amazonaws.engine.algorithm;
 
 import com.amazonaws.engine.enums.OrderStatus;
 import com.amazonaws.engine.order.Order;
+import com.amazonaws.engine.process.SharedBuffer;
 
 import java.util.Comparator;
 import java.util.List;
@@ -15,7 +16,10 @@ import java.util.List;
  */
 
 public class OrderMatchingAlgorithm {
-    public OrderMatchingAlgorithm(){
+    SharedBuffer<Order> sellSharedBuffer;
+
+    public OrderMatchingAlgorithm(SharedBuffer<Order> sellSharedBuffer){
+        this.sellSharedBuffer = sellSharedBuffer;
     }
 
     public void fillOrder(Order buyOrder, List<Order> sellOrders){
@@ -30,7 +34,6 @@ public class OrderMatchingAlgorithm {
             System.out.println("OrderMatchingAlgorithm - Iteration " + i + ", sharesCount : "  + sharesCount);
             i++;
         }
-        System.out.println("SharesCount " + sharesCount);
         if (buyOrder.getShares() == sharesCount){
             buyOrder.setOrderStatus(OrderStatus.FILLED);
             for(Order order : sellOrders){
@@ -54,12 +57,16 @@ public class OrderMatchingAlgorithm {
                 } else if (sellOrder.getShares() > requiredShares){
                     sellOrder.deductShares(requiredShares);
                     sellOrder.setOrderStatus(OrderStatus.PARTIALLY_FILLED);
+                    try {
+                        sellSharedBuffer.put(sellOrder);
 
-                    // TODO: Send it back to the SellOrder Producer...
+                    } catch (InterruptedException e){
+                        System.out.println("ERROR Returning Partially_Filled sellOrder to sellOrderSharedBuffer...");
+                        e.printStackTrace();
+                    }
                 }
                 j++;
             }
-            System.out.println("Does this print??");
         }
         buyOrder.setOrderStatus(OrderStatus.FILLED);
         System.out.println("***************FINISHED Order Matching**********************");

@@ -12,7 +12,7 @@ public class StockPipelineFactory {
         SharedBuffer<Order> sellSharedBuffer = new SharedBuffer<>();
         BuyOrderProducer buyOrderProducer = new BuyOrderProducer(buySharedBuffer);
         SellOrderProducer sellOrderProducer = new SellOrderProducer(sellSharedBuffer);
-        OrderMatchingAlgorithm orderMatchingAlgorithm = new OrderMatchingAlgorithm();
+        OrderMatchingAlgorithm orderMatchingAlgorithm = new OrderMatchingAlgorithm(sellSharedBuffer);
         StockConsumer stockConsumer = new StockConsumer(buySharedBuffer, sellSharedBuffer, orderMatchingAlgorithm);
 
         return StockPipeline.generateStockPipeline(buyOrderProducer, sellOrderProducer, stockConsumer);

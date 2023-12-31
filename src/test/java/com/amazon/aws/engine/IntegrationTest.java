@@ -172,7 +172,7 @@ public class IntegrationTest {
         server.processOrder(sellOrder3);
 //        Thread.sleep(3000);
         server.processOrder(sellOrder4);
-        Thread.sleep(10000);
+        Thread.sleep(5000);
 
     }
 }
