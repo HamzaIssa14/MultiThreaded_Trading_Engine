@@ -8,7 +8,7 @@ As of Dec 31st, 2023, this initial implementation focuses on the collection and 
 
 ## Workflow
 
-![Trading Engine Process](Trading_Engine_Design_2023.PNG)
+![Trading Engine Process](Trading_Engine_2024.png)
 
 The trading engine operates through the following steps:
 
