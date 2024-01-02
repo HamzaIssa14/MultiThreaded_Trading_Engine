@@ -20,6 +20,11 @@ repositories {
 
 // Manages project dependencies.
 dependencies {
+    implementation 'redis.clients:jedis:3.6.3' // Check for the latest version on Maven Central
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.slf4j:slf4j-simple:1.7.32'
+    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
+
     // JUnit is a unit testing framework for Java.
     // This dependency is used for writing and executing tests.
     // The 'testCompile' configuration indicates that JUnit is only needed for compiling tests.

@@ -2,32 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="00eea6e4-f760-424a-b76d-1e489b13fbc9" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.2.1/javaCompile/javaCompile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/cache/CacheConnectionPool.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/cache/CacheService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/cache/DefaultCacheService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/amazonaws/engine/process/StockConsumer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/amazonaws/engine/process/StockConsumer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/amazonaws/engine/process/StockPipeline.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/amazonaws/engine/process/StockPipeline.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/amazonaws/engine/server/Server$ConnectionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/amazonaws/engine/server/Server$ConnectionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/amazonaws/engine/server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/amazonaws/engine/server/Server.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/classes/com.amazon.aws.engine.IntegrationTest.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/classes/com.amazon.aws.engine.IntegrationTest.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/reports/tests/test/packages/com.amazon.aws.engine.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/tests/test/packages/com.amazon.aws.engine.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/TEST-com.amazon.aws.engine.IntegrationTest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/TEST-com.amazon.aws.engine.IntegrationTest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/output.bin.idx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/test-results/test/binary/results.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/algorithm/OrderMatchingAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/algorithm/OrderMatchingAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/StockConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/StockConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/StockPipeline.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/StockPipeline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/StockPipelineFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/StockPipelineFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/server/Server.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/amazon/aws/engine/IntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/amazon/aws/engine/IntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/enums/OrderAction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/enums/OrderAction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/order/Order.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/order/Order.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/BuyOrderProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/BuyOrderProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/SellOrderProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/amazonaws/engine/process/SellOrderProducer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,6 +50,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -218,10 +203,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="1085" y="409" key="#com.intellij.ide.util.MemberChooser" timestamp="1703559066906">
+    <state x="1085" y="409" key="#com.intellij.ide.util.MemberChooser" timestamp="1704168980708">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1085" y="409" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1703559066906" />
+    <state x="1085" y="409" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1704168980708" />
     <state x="971" y="625" key="#com.intellij.refactoring.move.MoveHandler.SelectRefactoringDialog" timestamp="1703968549542">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
@@ -250,10 +235,10 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="760" y="274" key="SettingsEditor/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1703978586366" />
-    <state x="976" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1703977919230">
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog" timestamp="1704229358799">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="976" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1703977919230" />
+    <state x="976" y="524" key="com.intellij.ide.util.TipDialog/0.0.2560.1400/-2560.0.2560.1400@0.0.2560.1400" timestamp="1704229358799" />
     <state x="976" y="432" width="607" height="536" key="find.popup" timestamp="1704066754743">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

@@ -7,8 +7,10 @@ import com.amazonaws.engine.stock.Stock;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 public abstract class Order implements Serializable {
+    private final String orderId;
     private final OrderAction orderAction;
     private final Stock stock;
     private final int originalShares;
@@ -16,6 +18,10 @@ public abstract class Order implements Serializable {
     private final Date date;
     private final User user;
     private OrderStatus status;
+
+    public String getOrderId(){
+        return orderId;
+    }
 
     public OrderAction getOrderAction(){
         return orderAction;
@@ -99,6 +105,7 @@ public abstract class Order implements Serializable {
     }
 
     protected Order(Builder<?> builder){
+        this.orderId = UUID.randomUUID().toString();
         this.orderAction = builder.orderAction;
         this.stock = builder.stock;
         this.originalShares = builder.shares;
