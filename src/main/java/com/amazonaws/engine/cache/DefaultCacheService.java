@@ -106,6 +106,7 @@ public class DefaultCacheService implements CacheService {
 
         try (Jedis jedis = connectionPool.getPool().getResource()){
             jedis.hdel(orderHashKey, orderId);
+            System.out.println("------ REMOVED Filled order from CacheService");
         }
     }
 
