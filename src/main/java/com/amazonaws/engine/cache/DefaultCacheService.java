@@ -81,14 +81,24 @@ public class DefaultCacheService implements CacheService {
     }
 
     @Override
-    public void pushOrder(Order order) throws IOException {
-        String orderJson = convertToJSON(order);
-        String orderHashKey = buildOrderHashKey(order.getStock().getStockTicker(), order.getOrderAction());
+    public void pushOrder(Order order) {
 
-        try (Jedis jedis = connectionPool.getPool().getResource()){ // TODO: Dont directly declare Jedis, use a wrapper instead to decouple.
-            jedis.hset(orderHashKey, order.getOrderId(), orderJson);
+        try {
+            String orderJson = convertToJSON(order);
+            String orderHashKey = buildOrderHashKey(order.getStock().getStockTicker(), order.getOrderAction());
+
+            try (Jedis jedis = connectionPool.getPool().getResource()) {
+                System.out.println("------ Pushing Order to CacheService");
+                jedis.hset(orderHashKey, order.getOrderId(), orderJson);
+                System.out.println("------ Attempted pushing order to CacheService");
+            }
+        } catch (Exception e) {
+            System.out.println("------ FAILIURE pushing order to CacheService");
+
+            e.printStackTrace();
         }
     }
+
 
     @Override
     public void removeFilledOrder(StockUniverse stockTicker, OrderAction orderAction, String orderId) {

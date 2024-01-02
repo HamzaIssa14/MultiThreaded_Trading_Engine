@@ -24,6 +24,7 @@ public class BuyOrderProducer implements Runnable{
             Order order = blockingQueue.take();
             sharedBuffer.put(order);
             cacheService.pushOrder(order);
+            System.out.println("ATTEMPTED TO PUSH ORDER TO REDIS FROM BUYORDERPRODUCER");
 
         } catch (InterruptedException | IOException e){
             // TODO: Handle it...

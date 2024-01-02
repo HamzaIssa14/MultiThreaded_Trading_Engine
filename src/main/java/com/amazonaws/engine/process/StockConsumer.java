@@ -3,6 +3,7 @@ package com.amazonaws.engine.process;
 import com.amazonaws.engine.algorithm.OrderMatchingAlgorithm;
 import com.amazonaws.engine.order.Order;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,8 @@ public class StockConsumer implements Runnable{
             }
         } catch (InterruptedException e){
             // TODO: Handle error.
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
     private int countTotalSellShares(List<Order> sellOrders){

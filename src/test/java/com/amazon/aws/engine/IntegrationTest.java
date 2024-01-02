@@ -11,7 +11,6 @@ import com.amazonaws.engine.server.Server;
 import com.amazonaws.engine.stock.Stock;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 
 import java.util.Date;
 
@@ -28,9 +27,8 @@ public class IntegrationTest {
 
     @Test
     public void processOrder_EvenBuySellOrders_ShouldFillAllOrders() throws InterruptedException {
-
-        Stock stock = Mockito.mock(Stock.class);
-        User user = Mockito.mock(User.class);
+        User user = new User();
+        Stock stock = new Stock(StockUniverse.APPL);
 
         Order buyOrder = new BuyOrder.Builder()
                 .orderAction(OrderAction.BUY)
@@ -56,8 +54,6 @@ public class IntegrationTest {
                 .user(user)
                 .build();
 
-        Mockito.when(stock.getStockTicker()).thenReturn(StockUniverse.APPL);
-
         Thread thread = new Thread(server);
         thread.start();
 
@@ -71,8 +67,8 @@ public class IntegrationTest {
     @Test
     public void processOrder_UnevenBuySellOrders_ShouldPartiallyFillOrder() throws InterruptedException {
 
-        Stock stock = Mockito.mock(Stock.class);
-        User user = Mockito.mock(User.class);
+        User user = new User();
+        Stock stock = new Stock(StockUniverse.APPL);
 
         Order buyOrder = new BuyOrder.Builder()
                 .orderAction(OrderAction.BUY)
@@ -98,8 +94,6 @@ public class IntegrationTest {
                 .user(user)
                 .build();
 
-        Mockito.when(stock.getStockTicker()).thenReturn(StockUniverse.APPL);
-
         Thread thread = new Thread(server);
         thread.start();
 
@@ -115,8 +109,8 @@ public class IntegrationTest {
     @Test
     public void processOrder_UnevenManyBuySellOrders_ShouldPartiallyFillOrder() throws InterruptedException {
 
-        Stock stock = Mockito.mock(Stock.class);
-        User user = Mockito.mock(User.class);
+        User user = new User();
+        Stock stock = new Stock(StockUniverse.APPL);
 
         Order buyOrder = new BuyOrder.Builder()
                 .orderAction(OrderAction.BUY)
@@ -158,7 +152,6 @@ public class IntegrationTest {
                 .user(user)
                 .build();
 
-        Mockito.when(stock.getStockTicker()).thenReturn(StockUniverse.APPL);
 
         Thread thread = new Thread(server);
         thread.start();

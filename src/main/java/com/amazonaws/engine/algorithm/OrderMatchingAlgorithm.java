@@ -1,9 +1,11 @@
 package com.amazonaws.engine.algorithm;
 
+import com.amazonaws.engine.cache.CacheService;
 import com.amazonaws.engine.enums.OrderStatus;
 import com.amazonaws.engine.order.Order;
 import com.amazonaws.engine.process.SharedBuffer;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 
@@ -17,12 +19,14 @@ import java.util.List;
 
 public class OrderMatchingAlgorithm {
     SharedBuffer<Order> sellSharedBuffer;
+    CacheService cacheService;
 
-    public OrderMatchingAlgorithm(SharedBuffer<Order> sellSharedBuffer){
+    public OrderMatchingAlgorithm(SharedBuffer<Order> sellSharedBuffer, CacheService cacheService){
         this.sellSharedBuffer = sellSharedBuffer;
+        this.cacheService = cacheService;
     }
 
-    public void fillOrder(Order buyOrder, List<Order> sellOrders){
+    public void fillOrder(Order buyOrder, List<Order> sellOrders) throws IOException {
         int i = 0;
         int sharesCount = 0;
         sellOrders.sort(Comparator.comparingInt(Order::getShares));
@@ -36,8 +40,14 @@ public class OrderMatchingAlgorithm {
         }
         if (buyOrder.getShares() == sharesCount){
             buyOrder.setOrderStatus(OrderStatus.FILLED);
+            cacheService.removeFilledOrder(buyOrder.getStock().getStockTicker(),
+                    buyOrder.getOrderAction(),
+                    buyOrder.getOrderId());
             for(Order order : sellOrders){
                 order.setOrderStatus(OrderStatus.FILLED);
+                cacheService.removeFilledOrder(order.getStock().getStockTicker(),
+                        order.getOrderAction(),
+                        order.getOrderId());
                 order.deductShares(order.getOriginalShares());
 
             }
@@ -52,11 +62,14 @@ public class OrderMatchingAlgorithm {
                     requiredShares -= sellSharesDeducted;
                     sellOrder.deductShares(sellSharesDeducted);
                     sellOrder.setOrderStatus(OrderStatus.FILLED);
-
+                    cacheService.removeFilledOrder(sellOrder.getStock().getStockTicker(),
+                            sellOrder.getOrderAction(),
+                            sellOrder.getOrderId());
 
                 } else if (sellOrder.getShares() > requiredShares){
                     sellOrder.deductShares(requiredShares);
                     sellOrder.setOrderStatus(OrderStatus.PARTIALLY_FILLED);
+                    cacheService.pushOrder(sellOrder);
                     try {
                         sellSharedBuffer.put(sellOrder);
 
@@ -69,6 +82,9 @@ public class OrderMatchingAlgorithm {
             }
         }
         buyOrder.setOrderStatus(OrderStatus.FILLED);
+        cacheService.removeFilledOrder(buyOrder.getStock().getStockTicker(),
+                buyOrder.getOrderAction(),
+                buyOrder.getOrderId());
         System.out.println("***************FINISHED Order Matching**********************");
         System.out.println("Buy order status: " + buyOrder.getStatus());
         for (Order sellOrder: sellOrders){
