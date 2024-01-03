@@ -27,68 +27,49 @@ public class OrderMatchingAlgorithm {
     }
 
     public void fillOrder(Order buyOrder, List<Order> sellOrders) throws IOException {
-        int i = 0;
-        int sharesCount = 0;
         sellOrders.sort(Comparator.comparingInt(Order::getShares));
         System.out.println("***************Beginning Order Matching**********************");
 
-        while(i < sellOrders.size() && sharesCount < buyOrder.getShares()){
-            Order curSellOrder = sellOrders.get(i);
-            sharesCount += curSellOrder.getShares();
-            System.out.println("OrderMatchingAlgorithm - Iteration " + i + ", sharesCount : "  + sharesCount);
-            i++;
-        }
-        if (buyOrder.getShares() == sharesCount){
-            buyOrder.setOrderStatus(OrderStatus.FILLED);
-            cacheService.removeFilledOrder(buyOrder.getStock().getStockTicker(),
-                    buyOrder.getOrderAction(),
-                    buyOrder.getOrderId());
-            for(Order order : sellOrders){
-                order.setOrderStatus(OrderStatus.FILLED);
-                cacheService.removeFilledOrder(order.getStock().getStockTicker(),
-                        order.getOrderAction(),
-                        order.getOrderId());
-                order.deductShares(order.getOriginalShares());
+        int requiredShares = buyOrder.getShares();
+        int j = 0;
+        while(j < sellOrders.size()){
+            Order sellOrder = sellOrders.get(j);
 
-            }
-        } else if (buyOrder.getShares() < sharesCount){
-            int requiredShares = buyOrder.getShares();
-            int j = 0;
-            while(j < sellOrders.size()){
-                Order sellOrder = sellOrders.get(j);
+            if (sellOrder.getShares() <= requiredShares){
+                int sellSharesDeducted = sellOrders.get(j).getShares();
+                requiredShares -= sellSharesDeducted;
+                sellOrder.deductShares(sellSharesDeducted);
+                sellOrder.setOrderStatus(OrderStatus.FILLED);
+                cacheService.removeFilledOrder(sellOrder.getStock().getStockTicker(),
+                        sellOrder.getOrderAction(),
+                        sellOrder.getOrderId());
+                System.out.println("///////////////Order " + sellOrder.getOrderId() + " Entered Here: 2//////////////////");
 
-                if (sellOrder.getShares() <= requiredShares){
-                    int sellSharesDeducted = sellOrders.get(j).getShares();
-                    requiredShares -= sellSharesDeducted;
-                    sellOrder.deductShares(sellSharesDeducted);
-                    sellOrder.setOrderStatus(OrderStatus.FILLED);
-                    cacheService.removeFilledOrder(sellOrder.getStock().getStockTicker(),
-                            sellOrder.getOrderAction(),
-                            sellOrder.getOrderId());
+            } else if (sellOrder.getShares() > requiredShares){
+                sellOrder.deductShares(requiredShares);
+                sellOrder.setOrderStatus(OrderStatus.PARTIALLY_FILLED);
+                System.out.println("///////////////Order " + sellOrder.getOrderId() + " Entered Here: 3//////////////////");
+                cacheService.updatePartiallyFilledOrder(sellOrder);
+                try {
+                    sellSharedBuffer.put(sellOrder);
 
-                } else if (sellOrder.getShares() > requiredShares){
-                    sellOrder.deductShares(requiredShares);
-                    sellOrder.setOrderStatus(OrderStatus.PARTIALLY_FILLED);
-                    cacheService.pushOrder(sellOrder);
-                    try {
-                        sellSharedBuffer.put(sellOrder);
-
-                    } catch (InterruptedException e){
-                        System.out.println("ERROR Returning Partially_Filled sellOrder to sellOrderSharedBuffer...");
-                        e.printStackTrace();
-                    }
+                } catch (InterruptedException e){
+                    System.out.println("ERROR Returning Partially_Filled sellOrder to sellOrderSharedBuffer...");
+                    e.printStackTrace();
                 }
-                j++;
             }
+            j++;
         }
+        ////
         buyOrder.setOrderStatus(OrderStatus.FILLED);
         cacheService.removeFilledOrder(buyOrder.getStock().getStockTicker(),
                 buyOrder.getOrderAction(),
                 buyOrder.getOrderId());
+
         System.out.println("***************FINISHED Order Matching**********************");
         System.out.println("Buy order status: " + buyOrder.getStatus());
         for (Order sellOrder: sellOrders){
-            System.out.println("SellOrder Original Shares " + sellOrder.getOriginalShares() +
+            System.out.println("SellOrder " + sellOrder.getOrderId() + " Original Shares " + sellOrder.getOriginalShares() +
                     " | New Status: " + sellOrder.getStatus() + " | Remaining Shares: " + sellOrder.getShares());
         }
 

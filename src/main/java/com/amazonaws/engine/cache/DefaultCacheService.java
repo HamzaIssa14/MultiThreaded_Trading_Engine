@@ -5,13 +5,15 @@ import com.amazonaws.engine.enums.StockUniverse;
 import com.amazonaws.engine.order.Order;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.Transaction;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultCacheService implements CacheService {
-
+    private final int MAX_ATTEMPTS = 10;
+    private final long WAIT_TIME_MS = 1000; // 1 second
     private final CacheConnectionPool connectionPool;
     private final ObjectMapper objectMapper;
 
@@ -82,33 +84,46 @@ public class DefaultCacheService implements CacheService {
 
     @Override
     public void pushOrder(Order order) {
-
         try {
             String orderJson = convertToJSON(order);
             String orderHashKey = buildOrderHashKey(order.getStock().getStockTicker(), order.getOrderAction());
 
             try (Jedis jedis = connectionPool.getPool().getResource()) {
-                System.out.println("------ Pushing Order to CacheService");
-                jedis.hset(orderHashKey, order.getOrderId(), orderJson);
-                System.out.println("------ Attempted pushing order to CacheService");
+                Transaction transaction = jedis.multi(); // Start the transaction
+                transaction.hset(orderHashKey, order.getOrderId(), orderJson);
+                transaction.exec(); // Execute all commands in the transaction
+
+                System.out.println("********* Pushing to Redis with key: " + orderHashKey + " and field: " + order.getOrderId());
             }
         } catch (Exception e) {
-            System.out.println("------ FAILIURE pushing order to CacheService");
-
+            System.out.println("------ FAILURE pushing order to CacheService");
             e.printStackTrace();
         }
     }
-
 
     @Override
     public void removeFilledOrder(StockUniverse stockTicker, OrderAction orderAction, String orderId) {
         String orderHashKey = buildOrderHashKey(stockTicker, orderAction);
 
-        try (Jedis jedis = connectionPool.getPool().getResource()){
-            jedis.hdel(orderHashKey, orderId);
-            System.out.println("------ REMOVED Filled order from CacheService");
+        try (Jedis jedis = connectionPool.getPool().getResource()) {
+            for (int i = 0; i < MAX_ATTEMPTS; i++) {
+                if (jedis.hexists(orderHashKey, orderId)) {
+                    jedis.hdel(orderHashKey, orderId);
+                    System.out.println("Removed: " + orderId);
+                    return;
+                }
+
+                System.out.println("Waiting for key to exist: " + orderId);
+                Thread.sleep(WAIT_TIME_MS);
+            }
+            System.out.println("Timeout waiting for key: " + orderId);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            System.out.println("Interrupted while waiting for key: " + orderId);
         }
     }
+
+
 
     @Override
     public void updatePartiallyFilledOrder(Order order) throws IOException {

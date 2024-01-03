@@ -1,5 +1,8 @@
 package com.amazon.aws.engine;
 
+import com.amazonaws.engine.cache.CacheConnectionPool;
+import com.amazonaws.engine.cache.CacheService;
+import com.amazonaws.engine.cache.DefaultCacheService;
 import com.amazonaws.engine.client.User;
 import com.amazonaws.engine.enums.OrderAction;
 import com.amazonaws.engine.enums.StockUniverse;
@@ -9,9 +12,11 @@ import com.amazonaws.engine.process.StockPipeline;
 import com.amazonaws.engine.process.StockPipelineFactory;
 import com.amazonaws.engine.server.Server;
 import com.amazonaws.engine.stock.Stock;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Date;
 
 
@@ -168,4 +173,40 @@ public class IntegrationTest {
         Thread.sleep(5000);
 
     }
+
+    @Test
+    public void testRedisOperations() throws IOException {
+
+        User user = new User();
+        Stock stock = new Stock(StockUniverse.APPL);
+
+        Order buyOrder = new BuyOrder.Builder()
+                .orderAction(OrderAction.BUY)
+                .stock(stock)
+                .shares(6)
+                .date(new Date())
+                .user(user)
+                .build();
+
+        Order sellOrder = new BuyOrder.Builder()
+                .orderAction(OrderAction.SELL)
+                .stock(stock)
+                .shares(1)
+                .date(new Date())
+                .user(user)
+                .build();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        CacheConnectionPool cacheConnectionPool = new CacheConnectionPool();
+        CacheService cacheService = new DefaultCacheService(cacheConnectionPool, objectMapper);
+
+        cacheService.pushOrder(sellOrder);
+
+        cacheService.removeFilledOrder(sellOrder.getStock().getStockTicker(),
+                sellOrder.getOrderAction(),
+                sellOrder.getOrderId());
+    }
+
+
+
 }
