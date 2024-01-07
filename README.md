@@ -10,20 +10,16 @@ This system integrates the essential features of a traditional trading engine wi
 
 ![Trading Engine Process](Trading_Engine_2024.png)
 
-The trading engine operates through the following steps:
 
-1. **Order Reception**: The server receives an `Order` object within an input stream from the Client.
-2. **StockPipeline Initialization**: Conditionally, the server creates a `StockPipeline` for the `StockTicker` specified in the order. If an existing `StockPipeline` is in place, it is reused.
-3. **Concurrency Management**: The server processes multiple orders concurrently, handling requests from various clients simultaneously.
-4. **Order Processing**: The `StockPipeline`, a core component of the Trading Engine, adopts the Producer-Consumer model to manage order processing.
-5. **Pending Order Queue**: Incoming orders are placed into a pending order buffer, awaiting categorization into buy or sell queues.
-6. **Order Queuing**: Orders are routed to either the buy or sell order queue based on their type.
-7. **Order Consumption**: The `OrderConsumer` object extracts orders from the queues for processing.
-8. **Order Matching**: The `OrderConsumer` fetches orders from both the `SellOrderQueue` and `BuyOrderQueue` to optimally pair them.
-9. **Order Matching Algorithm**: With the proper distribution of buy and sell orders, the `OrderConsumer` executes the `OrderMatchingAlgorithm`.
-10. **Order Filling**: The algorithm fills the buy order and as many sell orders as possible. Partially filled sell orders are labeled `PARTIALLY_FILLED` and returned to the `SellOrderQueue` with the filled quantity deducted.
-11. **Process Loop**: The order re-enters the process, designed with concurrency to ensure no step blocks any other step or user.
-
+* Upon startup, the server is ready to receive order objects (e.g., {ticker: APPL, action: BUY, shares: 18, ...}) through a client socket input stream.
+* For each stock ticker processed, a StockPipeline is created to handle orders specific to that ticker. If a pipeline for a ticker like APPL doesn't exist, it's created; otherwise, the existing one is used.
+* Orders are directed to their corresponding StockPipeline for processing. For APPL orders, they go to the APPL-specific pipeline.
+* The StockPipeline splits incoming orders between two processes based on the order type: BuyOrderProducer and SellOrderProducer, both specific to the stock ticker.
+* Orders are stored in separate buffers by the producers and also in ticker-specific Redis caches, which function as the order book (one for buy orders, one for sell orders).
+* A StockConsumer continuously retrieves data from both the buy and sell order buffers.
+* The order matching algorithm activates when there's a balanced mix of buy and sell orders, aiming to maximize order matches while minimizing partially filled orders.
+* Fulfilled orders are removed from the Redis cache. Partially filled orders are marked and re-entered into the pipeline for potential completion by future orders.
+* This process operates non-stop and concurrently until the system is shut down.
 ## Concurrency and Efficiency
 
 This system is architected with concurrency at its core, ensuring efficient and non-blocking operations across all stages of order processing. The goal is to provide a robust and scalable trading engine that can handle a significant load of simultaneous user interactions.
