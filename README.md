@@ -2,9 +2,9 @@
 
 ## Overview
 
-A trading engine is a crucial component of any trading platform, handling vital functions such as order management, order matching, and maintaining the order book. This project aims to prototype a model trading engine capable of supporting high concurrency through multithreading, efficiently matching buy and sell orders.
+A trading engine is a crucial component of any trading platform, handling vital functions such as order management, order matching, and maintaining the order book. 
 
-As of Dec 31st, 2023, this initial implementation focuses on the collection and order matching stages of the trading engine. The server processes incoming buy/sell orders from clients, initiates the order processing workflow, and concludes by filling orders fully or partially, cycling any partially filled orders back into the pending order queue.
+This system integrates the essential features of a traditional trading engine within a multithreaded architecture, enabling the high-capacity handling of diverse order types, actions, stocks, and shares. It is designed for concurrent order matching, optimizing execution speed while preventing disruption to other users and their incoming orders.
 
 ## Workflow
 
