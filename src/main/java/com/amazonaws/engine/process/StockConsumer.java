@@ -22,16 +22,10 @@ public class StockConsumer implements Runnable{
 
     @Override
     public void run(){
-        // REMIDNER, THIS CONSUMER IS NOT MADE CORRECTLY.
-        // IT NEEDS TO WAIT FOR THE PRODUCER TO HAVE CONTENTS ON AN INFINITE LOOP
-        // THEN IF A VALID COLLECTION OF SELL ORDERS IS OBTAINED, THEN CALL ORDERMATCHING ALGO....
-
-        // Make sure to check entire process to ensure that it is constantly runnigng, all threads....
-
         try {
             List<Order> sellOrders = new ArrayList<>();
             Order buyOrder;
-            while (!buySharedBuffer.buffer.isEmpty()) {
+            while (true) {
                 buyOrder = buySharedBuffer.take();
                 System.out.println("StockConsumer polling queue of of pending orders...");
                 while (countTotalSellShares(sellOrders) < buyOrder.getShares()) {

@@ -20,12 +20,14 @@ public class SellOrderProducer implements Runnable{
 
     @Override
     public void run(){
-        try {
-            Order order = blockingQueue.take();
-            sharedBuffer.put(order);
-            cacheService.pushOrder(order);
-        } catch (InterruptedException | IOException e){
-            // TODO: Handle it...
+        while (true){
+            try {
+                Order order = blockingQueue.take();
+                sharedBuffer.put(order);
+                cacheService.pushOrder(order);
+            } catch (InterruptedException | IOException e){
+                // TODO: Handle it...
+            }
         }
     }
 
