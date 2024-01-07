@@ -109,7 +109,7 @@ public class DefaultCacheService implements CacheService {
             for (int i = 0; i < MAX_ATTEMPTS; i++) {
                 if (jedis.hexists(orderHashKey, orderId)) {
                     jedis.hdel(orderHashKey, orderId);
-                    System.out.println("Removed: " + orderId);
+                    System.out.println("Removed: " + orderHashKey + " " + orderId);
                     return;
                 }
 
